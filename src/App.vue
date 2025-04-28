@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import PixelCanvas from './components/PixelCanvas.vue';
 import ColorPalette from './components/ColorPalette.vue';
 import ActionPanel from './components/ActionPanel.vue';
 import FramePanel from './components/FramePanel.vue';
 import LayerPanel from './components/LayerPanel.vue';
-import { useStore } from './store';
-import { exportProject, importProject } from './utils';
+import {exportProject, importProject} from './utils';
+import {useStore} from "./store/useStore.ts";
 
 const store = useStore();
 const isExporting = ref(false);
@@ -56,7 +56,7 @@ const canvasHeight = ref(store.state.canvasHeight);
 const handleResizeCanvas = () => {
   const width = parseInt(prompt('输入画布宽度', canvasWidth.value.toString()) || canvasWidth.value.toString());
   const height = parseInt(prompt('输入画布高度', canvasHeight.value.toString()) || canvasHeight.value.toString());
-  
+
   if (width > 0 && height > 0) {
     store.resizeCanvas(width, height);
     canvasWidth.value = width;
@@ -75,32 +75,34 @@ const handleResizeCanvas = () => {
         <button @click="handleResizeCanvas">调整画布大小</button>
       </div>
     </header>
-    
+
     <main class="editor-main">
       <div class="editor-sidebar">
         <div class="sidebar-section">
           <h2>调色板</h2>
-          <ColorPalette />
+          <ColorPalette/>
         </div>
-        
+
         <div class="sidebar-section">
           <h2>动作</h2>
-          <ActionPanel />
+          <ActionPanel/>
         </div>
-        
-        <div class="sidebar-section">
-          <h2>帧</h2>
-          <FramePanel />
-        </div>
-        
+
         <div class="sidebar-section">
           <h2>图层</h2>
-          <LayerPanel />
+          <LayerPanel/>
         </div>
       </div>
-      
+
       <div class="editor-canvas-container">
-        <PixelCanvas />
+        <PixelCanvas/>
+      </div>
+
+      <div class="editor-bottom">
+        <div class="bottom-section">
+          <h2>帧</h2>
+          <FramePanel/>
+        </div>
       </div>
     </main>
   </div>
@@ -133,15 +135,15 @@ body
   display: flex
   justify-content: space-between
   align-items: center
-  
+
   h1
     font-size: 1.5rem
     margin: 0
-  
+
   .editor-controls
     display: flex
     gap: 10px
-    
+
     button
       background-color: #555
       color: white
@@ -150,10 +152,10 @@ body
       border-radius: 4px
       cursor: pointer
       transition: background-color 0.2s
-      
+
       &:hover
         background-color: #777
-      
+
       &:disabled
         background-color: #444
         cursor: not-allowed
@@ -161,8 +163,22 @@ body
 // 编辑器主体
 .editor-main
   display: flex
+  flex-direction: column
+  gap: 20px
   flex: 1
   overflow: hidden
+
+  .editor-bottom
+    padding: 10px
+    background-color: #2a2a2a
+    border-radius: 5px
+
+    .bottom-section
+      h2
+        margin-top: 0
+        margin-bottom: 10px
+        font-size: 16px
+        color: #ddd
 
 // 侧边栏
 .editor-sidebar
@@ -175,12 +191,22 @@ body
   flex-direction: column
   gap: 15px
 
+.editor-main
+  display: flex
+  flex-flow: row wrap
+
+  .editor-sidebar, .editor-canvas-container
+    flex: 0 0 auto
+
+  .editor-bottom
+    flex: 0 0 100%
+
 // 侧边栏部分
 .sidebar-section
   background-color: #555
   border-radius: 4px
   padding: 10px
-  
+
   h2
     font-size: 1rem
     margin-bottom: 10px
@@ -196,4 +222,14 @@ body
   align-items: center
   background-color: #333
   overflow: auto
+
+.editor-canvas-container, .editor-sidebar
+  height: 100%
+
+.editor-canvas-container
+  flex: 1
+  overflow: auto
+
+.editor-bottom
+  width: 100%
 </style>

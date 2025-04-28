@@ -13,6 +13,7 @@
           <span v-else class="visibility-icon hidden">👁️‍🗨️</span>
         </div>
         <div class="layer-name">{{ layer.name }}</div>
+        <div class="layer-delete" @click.stop="deleteLayer(layer.id)" title="删除图层">✖</div>
       </div>
     </div>
 
@@ -23,13 +24,14 @@
           placeholder="图层名称"
           class="layer-input"
       />
-      <button @click="addNewLayer" class="add-layer-btn">添加图层</button>
+      <button @click="addNewLayer" class="add-layer-btn">+</button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import {ref} from 'vue';
-import {useStore} from '../store';
+
+import {useStore} from "../store/useStore.ts";
 
 const store = useStore();
 
@@ -59,6 +61,13 @@ const toggleLayerVisibility = (layerId: string, event: Event) => {
     if (layer) {
       layer.visible = !layer.visible;
     }
+  }
+};
+
+// 删除图层
+const deleteLayer = (layerId: string) => {
+  if (confirm('确定要删除此图层吗？')) {
+    store.deleteLayer(layerId);
   }
 };
 </script>

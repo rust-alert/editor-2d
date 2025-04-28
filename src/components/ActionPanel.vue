@@ -6,11 +6,18 @@ const store = useStore();
 
 // 添加新动作
 const newActionName = ref('');
+const actionVariant = ref('');
 
 const addNewAction = () => {
-  if (newActionName.value.trim()) {
-    store.addAction(newActionName.value.trim());
+  let name = newActionName.value.trim();
+  if (name) {
+    // 如果有变体，添加到名称中
+    if (actionVariant.value.trim()) {
+      name = `${name} (${actionVariant.value.trim()})`;
+    }
+    store.addAction(name);
     newActionName.value = '';
+    actionVariant.value = '';
   } else {
     store.addAction();
   }
@@ -19,6 +26,13 @@ const addNewAction = () => {
 // 选择动作
 const selectAction = (actionId: string) => {
   store.setCurrentAction(actionId);
+};
+
+// 删除动作
+const deleteAction = (actionId: string) => {
+  if (confirm('确定要删除此动作吗？')) {
+    store.deleteAction(actionId);
+  }
 };
 </script>
 
@@ -32,18 +46,27 @@ const selectAction = (actionId: string) => {
           :class="{ 'selected': action.id === store.state.currentActionId }"
           @click="selectAction(action.id)"
       >
-        {{ action.name }}
+        <div class="action-name">{{ action.name }}</div>
+        <div class="action-delete" @click.stop="deleteAction(action.id)" title="删除动作">✖</div>
       </div>
     </div>
 
     <div class="action-controls">
-      <input
-          type="text"
-          v-model="newActionName"
-          placeholder="动作名称"
-          class="action-input"
-      />
-      <button @click="addNewAction" class="add-action-btn">添加动作</button>
+      <div class="action-inputs">
+        <input
+            type="text"
+            v-model="newActionName"
+            placeholder="动作名称"
+            class="action-input"
+        />
+        <input
+            type="text"
+            v-model="actionVariant"
+            placeholder="变体 (如：皮肤、方向)"
+            class="action-input"
+        />
+      </div>
+      <button @click="addNewAction" class="add-action-btn">+</button>
     </div>
   </div>
 </template>
@@ -67,6 +90,9 @@ const selectAction = (actionId: string) => {
   border-radius: 3px
   cursor: pointer
   transition: background-color 0.2s
+  display: flex
+  justify-content: space-between
+  align-items: center
 
   &:hover
     background-color: #555
@@ -75,12 +101,37 @@ const selectAction = (actionId: string) => {
     background-color: #666
     font-weight: bold
 
+.action-name
+  flex: 1
+
+.action-delete
+  width: 16px
+  height: 16px
+  background-color: #f44336
+  color: white
+  border-radius: 50%
+  display: flex
+  align-items: center
+  justify-content: center
+  font-size: 10px
+  opacity: 0
+  transition: opacity 0.2s
+
+  .action-item:hover &
+    opacity: 1
+
 .action-controls
   display: flex
   gap: 5px
 
-.action-input
+.action-inputs
+  display: flex
+  flex-direction: column
+  gap: 5px
   flex: 1
+
+.action-input
+  width: 100%
   padding: 5px
   background-color: #333
   border: 1px solid #555
@@ -98,6 +149,8 @@ const selectAction = (actionId: string) => {
   border-radius: 3px
   color: white
   cursor: pointer
+  font-size: 16px
+  align-self: center
 
   &:hover
     background-color: #666

@@ -8,6 +8,7 @@
           :class="{ 'selected': color.isSelected }"
           :style="{ backgroundColor: color.color }"
           @click="selectColor(color.index)"
+          @dblclick="editColor(color.index)"
       ></div>
     </div>
 
@@ -20,6 +21,52 @@
         <div>索引: {{ store.state.currentColorIndex }}</div>
         <div>色相: {{ store.currentColor.value.hue }}</div>
         <div>透明度: {{ store.currentColor.value.alpha.toFixed(2) }}</div>
+        <button class="edit-btn" @click="editColor(store.state.currentColorIndex)">编辑</button>
+      </div>
+    </div>
+    
+    <!-- 颜色编辑模式 -->
+    <div v-if="isEditing" class="color-editor">
+      <div class="editor-header">
+        <h3>编辑颜色</h3>
+        <button class="close-btn" @click="isEditing = false">×</button>
+      </div>
+      <div class="editor-controls">
+        <div class="control-group">
+          <label>色相 (H)</label>
+          <input type="range" v-model.number="editingColor.hue" min="0" max="360" step="1" />
+          <input type="number" v-model.number="editingColor.hue" min="0" max="360" />
+        </div>
+        <div class="control-group">
+          <label>饱和度 (S)</label>
+          <input type="range" v-model.number="editingColor.saturation" min="0" max="100" step="1" />
+          <input type="number" v-model.number="editingColor.saturation" min="0" max="100" />
+        </div>
+        <div class="control-group">
+          <label>亮度 (B)</label>
+          <input type="range" v-model.number="editingColor.brightness" min="0" max="100" step="1" />
+          <input type="number" v-model.number="editingColor.brightness" min="0" max="100" />
+        </div>
+        <div class="control-group">
+          <label>透明度 (A)</label>
+          <input type="range" v-model.number="editingColor.alpha" min="0" max="1" step="0.01" />
+          <input type="number" v-model.number="editingColor.alpha" min="0" max="1" step="0.01" />
+        </div>
+        <div class="color-preview-large" :style="{ backgroundColor: previewColor }"></div>
+        <div class="editor-actions">
+          <button @click="saveEditedColor">保存</button>
+          <button @click="isEditing = false">取消</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 阵营色选择器 -->
+    <div class="faction-color">
+      <h3>阵营色</h3>
+      <div class="faction-controls">
+        <input type="range" v-model.number="factionHue" min="0" max="360" step="1" class="faction-slider" />
+        <div class="faction-preview" :style="{ backgroundColor: `hsl(${factionHue}, 100%, 50%)` }"></div>
+        <div>色相值: {{ factionHue }}</div>
       </div>
     </div>
   </div>
@@ -27,8 +74,8 @@
 
 <script setup lang="ts">
 import {ref, computed} from 'vue';
-import {useStore} from '../store';
 import {hueToColor} from '../utils';
+import {useStore} from "../store/useStore.ts";
 
 const store = useStore();
 
@@ -50,7 +97,6 @@ const selectColor = (index: number) => {
   store.setCurrentColor(index);
 };
 </script>
-
 
 
 <style lang="sass" scoped>
