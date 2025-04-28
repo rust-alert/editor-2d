@@ -122,112 +122,117 @@ onUnmounted(() => {
 });
 </script>
 
-<style lang="sass" scoped>
-.frame-panel
-  display: flex
-  flex-direction: column
-  gap: 10px
-  width: 100%
+<style lang="scss" scoped>
+.frame-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+.frame-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.timeline-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.control-btn {
+  padding: 5px 10px;
+  background-color: #555;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-.frame-timeline
-  display: flex
-  flex-direction: column
-  gap: 8px
+  &:hover {
+    background-color: #666;
+  }
+}
+.fps-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.fps-slider {
+  width: 80px;
+}
+.frame-list {
+  display: flex;
+  overflow-x: auto;
+  gap: 5px;
+  padding: 5px 0;
+}
+.frame-item {
+  padding: 6px;
+  background-color: #444;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 
-.timeline-controls
-  display: flex
-  align-items: center
-  gap: 10px
+  &:hover {
+    background-color: #555;
+  }
+  &.selected {
+    background-color: #666;
+    font-weight: bold;
+  }
+  &.current-playback {
+    border: 2px solid #4CAF50;
+  }
+}
+.frame-number {
+  font-size: 12px;
+}
+.frame-delete {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 16px;
+  height: 16px;
+  background-color: #f44336;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.2s;
 
-.control-btn
-  padding: 5px 10px
-  background-color: #555
-  border: none
-  border-radius: 3px
-  color: white
-  cursor: pointer
-  font-size: 14px
-  display: flex
-  align-items: center
-  justify-content: center
+  .frame-item:hover & {
+    opacity: 1;
+  }
+}
+.frame-controls {
+  display: flex;
+  justify-content: center;
+}
+.add-frame-btn {
+  padding: 5px 10px;
+  background-color: #555;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
 
-  &:hover
-    background-color: #666
-
-.fps-control
-  display: flex
-  align-items: center
-  gap: 8px
-  font-size: 12px
-
-.fps-slider
-  width: 80px
-
-.frame-list
-  display: flex
-  overflow-x: auto
-  gap: 5px
-  padding: 5px 0
-
-.frame-item
-  padding: 6px
-  background-color: #444
-  border-radius: 3px
-  cursor: pointer
-  transition: background-color 0.2s
-  min-width: 40px
-  height: 40px
-  display: flex
-  flex-direction: column
-  justify-content: center
-  align-items: center
-  position: relative
-
-  &:hover
-    background-color: #555
-
-  &.selected
-    background-color: #666
-    font-weight: bold
-
-  &.current-playback
-    border: 2px solid #4CAF50
-
-.frame-number
-  font-size: 12px
-
-.frame-delete
-  position: absolute
-  top: -5px
-  right: -5px
-  width: 16px
-  height: 16px
-  background-color: #f44336
-  color: white
-  border-radius: 50%
-  display: flex
-  align-items: center
-  justify-content: center
-  font-size: 10px
-  opacity: 0
-  transition: opacity 0.2s
-
-  .frame-item:hover &
-    opacity: 1
-
-.frame-controls
-  display: flex
-  justify-content: center
-
-.add-frame-btn
-  padding: 5px 10px
-  background-color: #555
-  border: none
-  border-radius: 3px
-  color: white
-  cursor: pointer
-  font-size: 16px
-
-  &:hover
-    background-color: #666
+  &:hover {
+    background-color: #666;
+  }
+}
 </style>

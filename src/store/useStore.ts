@@ -27,8 +27,6 @@ export const useStore = () => {
         return state.palette[state.currentColorIndex];
     });
 
-
-
     // 方法
     // 设置当前选中的颜色
     const setCurrentColor = (index: number) => {

@@ -1,11 +1,24 @@
 <template>
   <div class="pixel-editor">
     <header class="editor-header">
-      <div class="editor-controls">
-        <button @click="handleNewProject">新建项目</button>
-        <button @click="handleImport" :disabled="isImporting">导入项目</button>
-        <button @click="handleExport" :disabled="isExporting">导出项目</button>
-        <button @click="handleResizeCanvas">调整画布大小</button>
+      <div class="mode-switcher">
+        <button
+            @click="switchMode('edit')"
+            :class="{ active: currentMode === 'edit' }">
+          编辑模式
+        </button>
+        <button
+            @click="switchMode('preview')"
+            :class="{ active: currentMode === 'preview' }">
+          预览模式
+        </button>
+      </div>
+
+      <div class="editor-menu">
+        <button @click="handleNewProject">文件</button>
+        <button @click="handleImport" :disabled="isImporting">导入</button>
+        <button @click="handleExport" :disabled="isExporting">导出</button>
+        <button @click="handleResizeCanvas">画布</button>
       </div>
     </header>
 
@@ -31,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref,} from 'vue';
+import {ref} from 'vue';
 import PixelCanvas from './components/PixelCanvas.vue';
 import PaletteColor from './components/sidebar/PaletteColor.vue';
 import ActionPanel from './components/sidebar/ActionPanel.vue';
@@ -43,6 +56,13 @@ import {useStore} from "./store";
 const store = useStore();
 const isExporting = ref(false);
 const isImporting = ref(false);
+const currentMode = ref('edit');
+
+// 切换模式
+const switchMode = (mode: string) => {
+  currentMode.value = mode;
+  // 在这里可以添加模式切换后的逻辑
+};
 
 // 导出项目
 const handleExport = () => {
@@ -98,128 +118,195 @@ const handleResizeCanvas = () => {
 </script>
 
 
-<style lang="sass">
-// 重置样式
-*
-  margin: 0
-  padding: 0
-  box-sizing: border-box
-
-body
-  font-family: 'Arial', sans-serif
-  background-color: #f0f0f0
-  color: #333
-
+<style lang="scss">
 // 编辑器主容器
-.pixel-editor
-  display: flex
-  flex-direction: column
-  height: 100vh
-  overflow: hidden
+.pixel-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
 
 // 编辑器头部
-.editor-header
-  background-color: #333
-  color: white
-  padding: 10px 20px
-  display: flex
-  justify-content: space-between
-  align-items: center
+.editor-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background-color: #333;
+  border-bottom: 1px solid #444;
+}
 
-  h1
-    font-size: 1.5rem
-    margin: 0
+.mode-switcher {
+  display: flex;
+  gap: 10px;
+}
 
-  .editor-controls
-    display: flex
-    gap: 10px
+.mode-switcher button {
+  padding: 5px 15px;
+  background-color: #555;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+}
 
-    button
-      background-color: #555
-      color: white
-      border: none
-      padding: 8px 12px
-      border-radius: 4px
-      cursor: pointer
-      transition: background-color 0.2s
+.mode-switcher button.active {
+  background-color: #0078d7;
+}
 
-      &:hover
-        background-color: #777
+.editor-menu {
+  display: flex;
+  gap: 10px;
+}
 
-      &:disabled
-        background-color: #444
-        cursor: not-allowed
+.editor-menu button {
+  padding: 5px 15px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
 
-// 编辑器主体
-.editor-main
-  display: flex
-  flex-direction: column
-  gap: 20px
-  flex: 1
-  overflow: hidden
+.editor-menu button:hover {
+  background-color: #444;
+}
 
-  .editor-bottom
-    padding: 10px
-    background-color: #2a2a2a
-    border-radius: 5px
+.editor-header {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    .bottom-section
-      h2
-        margin-top: 0
-        margin-bottom: 10px
-        font-size: 16px
-        color: #ddd
+  h1 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
 
-// 侧边栏
-.editor-sidebar
-  width: 250px
-  background-color: #444
-  color: white
-  padding: 10px
-  overflow-y: auto
-  display: flex
-  flex-direction: column
-  gap: 15px
+  .editor-controls {
+    display: flex;
+    gap: 10px;
 
-.editor-main
-  display: flex
-  flex-flow: row wrap
+    button {
+      background-color: #555;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
 
-  .editor-sidebar, .editor-canvas-container
-    flex: 0 0 auto
+      &:hover {
+        background-color: #777;
+      }
 
-  .editor-bottom
-    flex: 0 0 100%
+      &:disabled {
+        background-color: #444;
+        cursor: not-allowed;
+      }
 
-// 侧边栏部分
-.sidebar-section
-  background-color: #555
-  border-radius: 4px
-  padding: 10px
+      // 编辑器主体
+    }
+  }
+}
 
-  h2
-    font-size: 1rem
-    margin-bottom: 10px
-    border-bottom: 1px solid #777
-    padding-bottom: 5px
+.editor-main {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+  overflow: hidden;
 
-// 画布容器
-.editor-canvas-container
-  flex: 1
-  padding: 20px
-  display: flex
-  justify-content: center
-  align-items: center
-  background-color: #333
-  overflow: auto
+  .editor-bottom {
+    padding: 10px;
+    background-color: #2a2a2a;
+    border-radius: 5px;
 
-.editor-canvas-container, .editor-sidebar
-  height: 100%
+    .bottom-section {
+      h2 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 16px;
+        color: #ddd;
+      }
 
-.editor-canvas-container
-  flex: 1
-  overflow: auto
+      // 侧边栏
+    }
+  }
+}
 
-.editor-bottom
-  width: 100%
+.editor-sidebar {
+  width: 250px;
+  background-color: #444;
+  color: white;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 110px);
+  flex-shrink: 0;
+}
+
+.editor-main {
+  display: flex;
+  flex-flow: row wrap;
+
+  .editor-sidebar,
+  .editor-canvas-container {
+    flex: 0 0 auto;
+  }
+
+  .editor-bottom {
+    flex: 0 0 100%;
+  }
+
+  // 侧边栏部分
+}
+
+.sidebar-section {
+  background-color: #555;
+  border-radius: 4px;
+  padding: 10px;
+
+  h2 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #777;
+    padding-bottom: 5px;
+  }
+
+  // 画布容器
+}
+
+.editor-canvas-container {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  overflow: auto;
+  height: 100%;
+}
+
+.editor-canvas-container,
+.editor-sidebar {
+  height: 100%;
+}
+
+.editor-canvas-container {
+  flex: 1;
+  overflow: auto;
+}
+
+.editor-bottom {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  flex-shrink: 0;
+}
 </style>

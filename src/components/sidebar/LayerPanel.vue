@@ -72,76 +72,92 @@ const deleteLayer = (layerId: string) => {
   }
 };
 </script>
-<style lang="sass" scoped>
-.layer-panel
-  display: flex
-  flex-direction: column
-  gap: 10px
 
-.layer-list
-  display: flex
-  flex-direction: column
-  gap: 4px
-  max-height: 150px
-  overflow-y: auto
+<style lang="scss" scoped>
+.layer-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-.layer-item
-  padding: 6px 10px
-  background-color: #444
-  border-radius: 3px
-  cursor: pointer
-  transition: background-color 0.2s
-  display: flex
-  align-items: center
-  gap: 8px
+.layer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+}
 
-  &:hover
-    background-color: #555
+.layer-item {
+  padding: 6px 10px;
+  background-color: #444;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-  &.selected
-    background-color: #666
-    font-weight: bold
+  &:hover {
+    background-color: #555;
+  }
 
-.layer-visibility
-  cursor: pointer
-  font-size: 14px
+  &.selected {
+    background-color: #666;
+    font-weight: bold;
+  }
+}
 
-  .visibility-icon
-    opacity: 0.7
+.layer-visibility {
+  cursor: pointer;
+  font-size: 14px;
 
-    &.visible
-      opacity: 1
+  .visibility-icon {
+    opacity: 0.7;
 
-    &.hidden
-      opacity: 0.4
+    &.visible {
+      opacity: 1;
+    }
 
-.layer-name
-  flex: 1
+    &.hidden {
+      opacity: 0.4;
+    }
+  }
+}
 
-.layer-controls
-  display: flex
-  gap: 5px
+.layer-name {
+  flex: 1;
+}
 
-.layer-input
-  flex: 1
-  padding: 5px
-  background-color: #333
-  border: 1px solid #555
-  border-radius: 3px
-  color: white
+.layer-controls {
+  display: flex;
+  gap: 5px;
+}
 
-  &:focus
-    outline: none
-    border-color: #777
+.layer-input {
+  flex: 1;
+  padding: 5px;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 3px;
+  color: white;
 
-.add-layer-btn
-  padding: 5px 10px
-  background-color: #555
-  border: none
-  border-radius: 3px
-  color: white
-  cursor: pointer
+  &:focus {
+    outline: none;
+    border-color: #777;
+  }
+}
 
-  &:hover
-    background-color: #666
+.add-layer-btn {
+  padding: 5px 10px;
+  background-color: #555;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #666;
+  }
+}
 </style>

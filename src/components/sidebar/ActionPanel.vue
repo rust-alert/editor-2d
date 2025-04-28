@@ -16,18 +16,7 @@
 
     <div class="action-controls">
       <div class="action-inputs">
-        <input
-            type="text"
-            v-model="newActionName"
-            placeholder="动作名称"
-            class="action-input"
-        />
-        <input
-            type="text"
-            v-model="actionVariant"
-            placeholder="变体 (如：皮肤、方向)"
-            class="action-input"
-        />
+        <input type="text" v-model="newActionName" placeholder="动作名称" class="action-input"/>
       </div>
       <button @click="addNewAction" class="add-action-btn">+</button>
     </div>
@@ -73,88 +62,101 @@ const deleteAction = (actionId: string) => {
 </script>
 
 
+<style lang="scss" scoped>
+.action-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-<style lang="sass" scoped>
-.action-panel
-  display: flex
-  flex-direction: column
-  gap: 10px
+.action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+}
 
-.action-list
-  display: flex
-  flex-direction: column
-  gap: 4px
-  max-height: 150px
-  overflow-y: auto
+.action-item {
+  padding: 6px 10px;
+  background-color: #444;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-.action-item
-  padding: 6px 10px
-  background-color: #444
-  border-radius: 3px
-  cursor: pointer
-  transition: background-color 0.2s
-  display: flex
-  justify-content: space-between
-  align-items: center
+  &:hover {
+    background-color: #555;
+  }
 
-  &:hover
-    background-color: #555
+  &.selected {
+    background-color: #666;
+    font-weight: bold;
+  }
+}
 
-  &.selected
-    background-color: #666
-    font-weight: bold
+.action-name {
+  flex: 1;
+}
 
-.action-name
-  flex: 1
+.action-delete {
+  width: 16px;
+  height: 16px;
+  background-color: #f44336;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.2s;
 
-.action-delete
-  width: 16px
-  height: 16px
-  background-color: #f44336
-  color: white
-  border-radius: 50%
-  display: flex
-  align-items: center
-  justify-content: center
-  font-size: 10px
-  opacity: 0
-  transition: opacity 0.2s
+  .action-item:hover & {
+    opacity: 1;
+  }
+}
 
-  .action-item:hover &
-    opacity: 1
+.action-controls {
+  display: flex;
+  gap: 5px;
+}
 
-.action-controls
-  display: flex
-  gap: 5px
+.action-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
 
-.action-inputs
-  display: flex
-  flex-direction: column
-  gap: 5px
-  flex: 1
+.action-input {
+  width: 100%;
+  padding: 5px;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 3px;
+  color: white;
 
-.action-input
-  width: 100%
-  padding: 5px
-  background-color: #333
-  border: 1px solid #555
-  border-radius: 3px
-  color: white
+  &:focus {
+    outline: none;
+    border-color: #777;
+  }
+}
 
-  &:focus
-    outline: none
-    border-color: #777
+.add-action-btn {
+  padding: 5px 10px;
+  background-color: #555;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  align-self: center;
 
-.add-action-btn
-  padding: 5px 10px
-  background-color: #555
-  border: none
-  border-radius: 3px
-  color: white
-  cursor: pointer
-  font-size: 16px
-  align-self: center
-
-  &:hover
-    background-color: #666
+  &:hover {
+    background-color: #666;
+  }
+}
 </style>
