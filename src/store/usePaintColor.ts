@@ -1,10 +1,10 @@
-import { computed } from "vue";
-import { useStore } from "./useStore";
+import {computed} from "vue";
+import {useStore} from "./useStore";
 
-export const usePaintColor = () => {
+export function useBrush() {
     const store = useStore();
-    
-    const currentColor = computed(() => {
+
+    const color = computed(() => {
         return store.state.palette[store.state.currentColorIndex];
     });
 
@@ -14,8 +14,5 @@ export const usePaintColor = () => {
         }
     };
 
-    return {
-        currentColor,
-        setColor
-    };
-};
+    return {color, setColor};
+}

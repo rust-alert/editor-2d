@@ -11,9 +11,9 @@
 
     <main class="editor-main">
       <div class="editor-sidebar">
-        <ColorPalette/>
-        <ActionPanel/>
-        <LayerPanel/>
+        <palette-color/>
+        <action-panel/>
+        <layer-panel/>
       </div>
 
       <div class="editor-canvas-container">
@@ -22,7 +22,7 @@
 
       <div class="editor-bottom">
         <div class="bottom-section">
-          <h2>帧</h2>
+          <h2>动画帧</h2>
           <FramePanel/>
         </div>
       </div>
@@ -31,14 +31,14 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted} from 'vue';
+import {ref,} from 'vue';
 import PixelCanvas from './components/PixelCanvas.vue';
-import ColorPalette from './components/ColorPalette.vue';
-import ActionPanel from './components/ActionPanel.vue';
-import FramePanel from './components/FramePanel.vue';
-import LayerPanel from './components/LayerPanel.vue';
+import PaletteColor from './components/sidebar/PaletteColor.vue';
+import ActionPanel from './components/sidebar/ActionPanel.vue';
+import FramePanel from './components/sidebar/FramePanel.vue';
+import LayerPanel from './components/sidebar/LayerPanel.vue';
 import {exportProject, importProject} from './utils';
-import {useStore} from "./store/useStore.ts";
+import {useStore} from "./store";
 
 const store = useStore();
 const isExporting = ref(false);

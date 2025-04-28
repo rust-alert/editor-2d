@@ -2,17 +2,17 @@
   <div class="faction-color">
     <h3>阵营色</h3>
     <div class="faction-controls">
-      <input 
-        type="range" 
-        v-model.number="hue" 
-        min="0" 
-        max="360" 
-        step="1" 
-        class="faction-slider"
+      <input
+          type="range"
+          v-model.number="hue"
+          min="0"
+          max="360"
+          step="1"
+          class="faction-slider"
       />
-      <div 
-        class="faction-preview" 
-        :style="{ backgroundColor: `hsl(${hue}, 100%, 50%)` }"
+      <div
+          class="faction-preview"
+          :style="{ backgroundColor: `hsl(${hue}, 100%, 50%)` }"
       ></div>
       <div>色相值: {{ hue }}</div>
     </div>
@@ -20,12 +20,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import {ref} from 'vue';
 
 const hue = ref(0);
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 .faction-color {
   background-color: #333;
   border-radius: 4px;

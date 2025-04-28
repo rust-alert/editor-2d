@@ -60,37 +60,13 @@
         </div>
       </div>
     </div>
-
-    <!-- 编辑按钮 -->
-    <button class="edit-mode-btn" @click="toggleEditMode">
-      {{ isEditMode ? '完成' : '编辑' }}
-    </button>
-
-    <!-- 编辑模式 -->
-    <div v-if="isEditMode" class="edit-mode-palette">
-      <div 
-        v-for="(group, groupIndex) in groupedPalette" 
-        :key="groupIndex"
-        class="palette-group"
-      >
-        <div
-          v-for="color in group"
-          :key="color.index"
-          class="color-cell"
-          :class="{ 'selected': color.isSelected }"
-          :style="{ backgroundColor: color.color }"
-          @click="selectColor(color.index)"
-          @dblclick="editColor(color.index)"
-        ></div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import {ref, computed} from 'vue';
-import {hueToColor} from '../utils';
-import {useStore} from "../store/useStore.ts";
+import {hueToColor} from '../../utils';
+import {useStore} from "../../store/useStore.ts";
 
 const store = useStore();
 
