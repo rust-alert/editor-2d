@@ -8,10 +8,10 @@
         </button>
         <div class="fps-control">
           <span>{{ fps }}帧/秒</span>
-          <input type="range" min="1" max="60" v-model.number="fps" class="fps-slider" />
+          <input type="range" min="1" max="60" v-model.number="fps" class="fps-slider"/>
         </div>
       </div>
-      
+
       <div class="frame-list">
         <div
             v-for="frame in store.currentAction.value.frames"
@@ -64,7 +64,7 @@ let playbackInterval: number | null = null;
 // 切换播放/暂停
 const togglePlayback = () => {
   isPlaying.value = !isPlaying.value;
-  
+
   if (isPlaying.value) {
     startPlayback();
   } else {
@@ -75,25 +75,25 @@ const togglePlayback = () => {
 // 开始播放
 const startPlayback = () => {
   if (!store.currentAction.value || store.currentAction.value.frames.length === 0) return;
-  
+
   // 如果没有选中帧，默认从第一帧开始
   if (!currentPlaybackFrameId.value) {
     currentPlaybackFrameId.value = store.currentAction.value.frames[0].id;
   }
-  
+
   // 设置播放间隔
   const intervalTime = 1000 / fps.value;
   playbackInterval = window.setInterval(() => {
     if (!store.currentAction.value) return;
-    
+
     // 获取当前播放帧的索引
     const currentIndex = store.currentAction.value.frames.findIndex(
-      frame => frame.id === currentPlaybackFrameId.value
+        frame => frame.id === currentPlaybackFrameId.value
     );
-    
+
     // 计算下一帧索引
     const nextIndex = (currentIndex + 1) % store.currentAction.value.frames.length;
-    
+
     // 设置下一帧
     currentPlaybackFrameId.value = store.currentAction.value.frames[nextIndex].id;
     store.setCurrentFrame(currentPlaybackFrameId.value);
@@ -189,7 +189,7 @@ onUnmounted(() => {
   &.selected
     background-color: #666
     font-weight: bold
-    
+
   &.current-playback
     border: 2px solid #4CAF50
 

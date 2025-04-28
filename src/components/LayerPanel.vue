@@ -1,5 +1,6 @@
 <template>
   <div class="layer-panel">
+    <h2>图层</h2>
     <div class="layer-list" v-if="store.currentFrame.value">
       <div
           v-for="layer in store.currentFrame.value.layers"

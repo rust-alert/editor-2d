@@ -1,3 +1,39 @@
+<template>
+  <div class="action-panel">
+    <h2>动作</h2>
+    <div class="action-list">
+      <div
+          v-for="action in store.state.actions"
+          :key="action.id"
+          class="action-item"
+          :class="{ 'selected': action.id === store.state.currentActionId }"
+          @click="selectAction(action.id)"
+      >
+        <div class="action-name">{{ action.name }}</div>
+        <div class="action-delete" @click.stop="deleteAction(action.id)" title="删除动作">✖</div>
+      </div>
+    </div>
+
+    <div class="action-controls">
+      <div class="action-inputs">
+        <input
+            type="text"
+            v-model="newActionName"
+            placeholder="动作名称"
+            class="action-input"
+        />
+        <input
+            type="text"
+            v-model="actionVariant"
+            placeholder="变体 (如：皮肤、方向)"
+            class="action-input"
+        />
+      </div>
+      <button @click="addNewAction" class="add-action-btn">+</button>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import {ref} from 'vue';
 import {useStore} from '../store';
@@ -36,40 +72,7 @@ const deleteAction = (actionId: string) => {
 };
 </script>
 
-<template>
-  <div class="action-panel">
-    <div class="action-list">
-      <div
-          v-for="action in store.state.actions"
-          :key="action.id"
-          class="action-item"
-          :class="{ 'selected': action.id === store.state.currentActionId }"
-          @click="selectAction(action.id)"
-      >
-        <div class="action-name">{{ action.name }}</div>
-        <div class="action-delete" @click.stop="deleteAction(action.id)" title="删除动作">✖</div>
-      </div>
-    </div>
 
-    <div class="action-controls">
-      <div class="action-inputs">
-        <input
-            type="text"
-            v-model="newActionName"
-            placeholder="动作名称"
-            class="action-input"
-        />
-        <input
-            type="text"
-            v-model="actionVariant"
-            placeholder="变体 (如：皮肤、方向)"
-            class="action-input"
-        />
-      </div>
-      <button @click="addNewAction" class="add-action-btn">+</button>
-    </div>
-  </div>
-</template>
 
 <style lang="sass" scoped>
 .action-panel

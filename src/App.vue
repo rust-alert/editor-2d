@@ -1,3 +1,35 @@
+<template>
+  <div class="pixel-editor">
+    <header class="editor-header">
+      <div class="editor-controls">
+        <button @click="handleNewProject">新建项目</button>
+        <button @click="handleImport" :disabled="isImporting">导入项目</button>
+        <button @click="handleExport" :disabled="isExporting">导出项目</button>
+        <button @click="handleResizeCanvas">调整画布大小</button>
+      </div>
+    </header>
+
+    <main class="editor-main">
+      <div class="editor-sidebar">
+        <ColorPalette/>
+        <ActionPanel/>
+        <LayerPanel/>
+      </div>
+
+      <div class="editor-canvas-container">
+        <PixelCanvas/>
+      </div>
+
+      <div class="editor-bottom">
+        <div class="bottom-section">
+          <h2>帧</h2>
+          <FramePanel/>
+        </div>
+      </div>
+    </main>
+  </div>
+</template>
+
 <script setup lang="ts">
 import {ref, onMounted} from 'vue';
 import PixelCanvas from './components/PixelCanvas.vue';
@@ -65,48 +97,6 @@ const handleResizeCanvas = () => {
 };
 </script>
 
-<template>
-  <div class="pixel-editor">
-    <header class="editor-header">
-      <div class="editor-controls">
-        <button @click="handleNewProject">新建项目</button>
-        <button @click="handleImport" :disabled="isImporting">导入项目</button>
-        <button @click="handleExport" :disabled="isExporting">导出项目</button>
-        <button @click="handleResizeCanvas">调整画布大小</button>
-      </div>
-    </header>
-
-    <main class="editor-main">
-      <div class="editor-sidebar">
-        <div class="sidebar-section">
-          <h2>调色板</h2>
-          <ColorPalette/>
-        </div>
-
-        <div class="sidebar-section">
-          <h2>动作</h2>
-          <ActionPanel/>
-        </div>
-
-        <div class="sidebar-section">
-          <h2>图层</h2>
-          <LayerPanel/>
-        </div>
-      </div>
-
-      <div class="editor-canvas-container">
-        <PixelCanvas/>
-      </div>
-
-      <div class="editor-bottom">
-        <div class="bottom-section">
-          <h2>帧</h2>
-          <FramePanel/>
-        </div>
-      </div>
-    </main>
-  </div>
-</template>
 
 <style lang="sass">
 // 重置样式

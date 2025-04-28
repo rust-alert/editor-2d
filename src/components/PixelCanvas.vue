@@ -64,6 +64,15 @@ const lastPosition = ref({ x: -1, y: -1 });
 const canvasWidth = computed(() => store.state.canvasWidth * zoom.value);
 const canvasHeight = computed(() => store.state.canvasHeight * zoom.value);
 
+// 获取阵营色调整后的颜色
+const getFactionAdjustedColor = (color, factionHue) => {
+  // 如果色相为0，则使用阵营色
+  if (color.hue === 0) {
+    return hueToColor(factionHue, color.alpha);
+  }
+  return hueToColor(color.hue, color.alpha);
+};
+
 // 绘制网格和像素
 const redrawCanvas = () => {
   const canvas = canvasRef.value;
@@ -118,6 +127,9 @@ const redrawCanvas = () => {
     ctx.stroke();
   }
   
+  // 获取阵营色
+  const factionHue = document.querySelector('.faction-slider')?.value || 0;
+  
   // 绘制所有可见图层的像素
   if (store.currentFrame.value) {
     // 从底层到顶层绘制
@@ -126,7 +138,8 @@ const redrawCanvas = () => {
       
       layer.pixels.forEach(pixel => {
         const color = store.state.palette[pixel.colorIndex];
-        ctx.fillStyle = hueToColor(color.hue, color.alpha);
+        // 使用阵营色调整
+        ctx.fillStyle = getFactionAdjustedColor(color, factionHue);
         ctx.fillRect(
           pixel.x * zoom.value + 1, 
           pixel.y * zoom.value + 1, 
