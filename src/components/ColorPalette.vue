@@ -1,7 +1,34 @@
+<template>
+  <div class="color-palette">
+    <div class="palette-grid">
+      <div
+          v-for="color in paletteColors"
+          :key="color.index"
+          class="color-cell"
+          :class="{ 'selected': color.isSelected }"
+          :style="{ backgroundColor: color.color }"
+          @click="selectColor(color.index)"
+      ></div>
+    </div>
+
+    <div class="current-color">
+      <div
+          class="color-preview"
+          :style="{ backgroundColor: hueToColor(store.currentColor.value.hue, store.currentColor.value.alpha) }"
+      ></div>
+      <div class="color-info">
+        <div>索引: {{ store.state.currentColorIndex }}</div>
+        <div>色相: {{ store.currentColor.value.hue }}</div>
+        <div>透明度: {{ store.currentColor.value.alpha.toFixed(2) }}</div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useStore } from '../store';
-import { hueToColor } from '../utils';
+import {ref, computed} from 'vue';
+import {useStore} from '../store';
+import {hueToColor} from '../utils';
 
 const store = useStore();
 
@@ -24,33 +51,7 @@ const selectColor = (index: number) => {
 };
 </script>
 
-<template>
-  <div class="color-palette">
-    <div class="palette-grid">
-      <div 
-        v-for="color in paletteColors" 
-        :key="color.index"
-        class="color-cell"
-        :class="{ 'selected': color.isSelected }"
-        :style="{ backgroundColor: color.color }"
-        @click="selectColor(color.index)"
-        :title=`索引: ${color.index}`
-      ></div>
-    </div>
-    
-    <div class="current-color">
-      <div 
-        class="color-preview"
-        :style="{ backgroundColor: hueToColor(store.currentColor.value.hue, store.currentColor.value.alpha) }"
-      ></div>
-      <div class="color-info">
-        <div>索引: {{ store.state.currentColorIndex }}</div>
-        <div>色相: {{ store.currentColor.value.hue }}</div>
-        <div>透明度: {{ store.currentColor.value.alpha.toFixed(2) }}</div>
-      </div>
-    </div>
-  </div>
-</template>
+
 
 <style lang="sass" scoped>
 .color-palette
@@ -73,11 +74,11 @@ const selectColor = (index: number) => {
   cursor: pointer
   border: 1px solid transparent
   transition: transform 0.1s
-  
+
   &:hover
     transform: scale(1.2)
     z-index: 1
-  
+
   &.selected
     border-color: #fff
     box-shadow: 0 0 0 1px #000

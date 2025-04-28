@@ -68,7 +68,6 @@ const handleResizeCanvas = () => {
 <template>
   <div class="pixel-editor">
     <header class="editor-header">
-      <h1>像素帧动画编辑器</h1>
       <div class="editor-controls">
         <button @click="handleNewProject">新建项目</button>
         <button @click="handleImport" :disabled="isImporting">导入项目</button>

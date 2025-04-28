@@ -1,3 +1,19 @@
+<template>
+  <div class="pixel-canvas-container" ref="canvasContainer">
+    <canvas ref="canvasRef" class="pixel-canvas"></canvas>
+    <div class="canvas-info">
+      <div>缩放: {{ zoom }}x</div>
+      <div>画布大小: {{ store.state.canvasWidth }}x{{ store.state.canvasHeight }}</div>
+      <div>当前颜色:
+        <span
+            class="current-color-preview"
+            :style="{ backgroundColor: hueToColor(store.currentColor.value.hue, store.currentColor.value.alpha) }"
+        ></span>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { useStore } from '../store';
@@ -204,21 +220,7 @@ onMounted(() => {
 });
 </script>
 
-<template>
-  <div class="pixel-canvas-container" ref="canvasContainer">
-    <canvas ref="canvasRef" class="pixel-canvas"></canvas>
-    <div class="canvas-info">
-      <div>缩放: {{ zoom }}x</div>
-      <div>画布大小: {{ store.state.canvasWidth }}x{{ store.state.canvasHeight }}</div>
-      <div>当前颜色: 
-        <span 
-          class="current-color-preview" 
-          :style="{ backgroundColor: hueToColor(store.currentColor.value.hue, store.currentColor.value.alpha) }"
-        ></span>
-      </div>
-    </div>
-  </div>
-</template>
+
 
 <style lang="sass" scoped>
 .pixel-canvas-container

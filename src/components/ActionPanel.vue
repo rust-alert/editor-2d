@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useStore } from '../store';
+import {ref} from 'vue';
+import {useStore} from '../store';
 
 const store = useStore();
 
@@ -25,23 +25,23 @@ const selectAction = (actionId: string) => {
 <template>
   <div class="action-panel">
     <div class="action-list">
-      <div 
-        v-for="action in store.state.actions" 
-        :key="action.id"
-        class="action-item"
-        :class="{ 'selected': action.id === store.state.currentActionId }"
-        @click="selectAction(action.id)"
+      <div
+          v-for="action in store.state.actions"
+          :key="action.id"
+          class="action-item"
+          :class="{ 'selected': action.id === store.state.currentActionId }"
+          @click="selectAction(action.id)"
       >
         {{ action.name }}
       </div>
     </div>
-    
+
     <div class="action-controls">
-      <input 
-        type="text" 
-        v-model="newActionName" 
-        placeholder="动作名称"
-        class="action-input"
+      <input
+          type="text"
+          v-model="newActionName"
+          placeholder="动作名称"
+          class="action-input"
       />
       <button @click="addNewAction" class="add-action-btn">添加动作</button>
     </div>
@@ -67,10 +67,10 @@ const selectAction = (actionId: string) => {
   border-radius: 3px
   cursor: pointer
   transition: background-color 0.2s
-  
+
   &:hover
     background-color: #555
-  
+
   &.selected
     background-color: #666
     font-weight: bold
@@ -86,7 +86,7 @@ const selectAction = (actionId: string) => {
   border: 1px solid #555
   border-radius: 3px
   color: white
-  
+
   &:focus
     outline: none
     border-color: #777
@@ -98,7 +98,7 @@ const selectAction = (actionId: string) => {
   border-radius: 3px
   color: white
   cursor: pointer
-  
+
   &:hover
     background-color: #666
 </style>
