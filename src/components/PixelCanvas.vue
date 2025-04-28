@@ -249,6 +249,15 @@ watch(
   { deep: true }
 );
 
+// 监听当前颜色索引变化
+watch(
+  () => store.state.currentColorIndex,
+  () => {
+    redrawCanvas();
+  },
+  { immediate: true }
+);
+
 // 背景图片处理
 const handleBackgroundUpload = (event: Event) => {
   const input = event.target as HTMLInputElement;
@@ -308,6 +317,15 @@ watch(
     redrawCanvas();
   },
   { deep: true }
+);
+
+// 监听当前颜色索引变化
+watch(
+  () => store.state.currentColorIndex,
+  () => {
+    redrawCanvas();
+  },
+  { immediate: true }
 );
 
 // 监听背景图片和位置变化

@@ -61,13 +61,27 @@
       </div>
     </div>
 
-    <!-- 阵营色选择器 -->
-    <div class="faction-color">
-      <h3>阵营色</h3>
-      <div class="faction-controls">
-        <input type="range" v-model.number="factionHue" min="0" max="360" step="1" class="faction-slider"/>
-        <div class="faction-preview" :style="{ backgroundColor: `hsl(${factionHue}, 100%, 50%)` }"></div>
-        <div>色相值: {{ factionHue }}</div>
+    <!-- 编辑按钮 -->
+    <button class="edit-mode-btn" @click="toggleEditMode">
+      {{ isEditMode ? '完成' : '编辑' }}
+    </button>
+
+    <!-- 编辑模式 -->
+    <div v-if="isEditMode" class="edit-mode-palette">
+      <div 
+        v-for="(group, groupIndex) in groupedPalette" 
+        :key="groupIndex"
+        class="palette-group"
+      >
+        <div
+          v-for="color in group"
+          :key="color.index"
+          class="color-cell"
+          :class="{ 'selected': color.isSelected }"
+          :style="{ backgroundColor: color.color }"
+          @click="selectColor(color.index)"
+          @dblclick="editColor(color.index)"
+        ></div>
       </div>
     </div>
   </div>
@@ -96,6 +110,7 @@ const paletteColors = computed(() => {
 // 选择颜色
 const selectColor = (index: number) => {
   store.setCurrentColor(index);
+  store.state.currentColorIndex = index;
 };
 
 // 颜色编辑模式
@@ -137,8 +152,19 @@ const saveEditedColor = () => {
   }
 };
 
-// 阵营色
-const factionHue = ref(0);
+// 编辑模式
+const isEditMode = ref(false);
+const groupedPalette = computed(() => {
+  const groups = [];
+  for (let i = 0; i < paletteColors.value.length; i += 16) {
+    groups.push(paletteColors.value.slice(i, i + 16));
+  }
+  return groups;
+});
+
+const toggleEditMode = () => {
+  isEditMode.value = !isEditMode.value;
+};
 </script>
 
 
